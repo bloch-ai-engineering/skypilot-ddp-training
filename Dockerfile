@@ -5,6 +5,7 @@ WORKDIR /workspace
 RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel
 
 RUN python -m pip install --no-cache-dir \
+    huggingface_hub \    
     transformers \
     datasets \
     accelerate \
@@ -15,3 +16,4 @@ RUN python -m pip install --no-cache-dir \
     scipy
 
 CMD ["bash"]
+

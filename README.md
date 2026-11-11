@@ -19,7 +19,8 @@
           --master_addr=<first node IP> train.py      ← NCCL all-reduce across nodes
 ```
 
-- **[`train.py`](train.py):** causal-LM training on WikiText-2 with Hugging Face `Trainer` under DDP. It initializes NCCL from the torchrun environment variables, packs the tokens into fixed blocks, and prints a rank-0 banner with the NCCL and world-size setup. The model is set by the `MODEL_ID` environment variable.
+- **[`train.py`](train.py)** (experiment 1): causal-LM training on WikiText-2 with Hugging Face `Trainer` under DDP. It initializes NCCL from the torchrun environment variables, packs the tokens into fixed blocks, and prints a rank-0 banner with the NCCL and world-size setup. The model is set by the `MODEL_ID` environment variable.
+- **[`train_gpt2_instrumented.py`](train_gpt2_instrumented.py)** (experiment 2): GPT-2 Large pretraining on WikiText-2. A DDP comm hook times every all-reduce and counts the bytes it moves, so communication overhead can be measured directly instead of guessed.
 - **[`skypilot/`](skypilot/):** job specs. SkyPilot provides the node IPs and ranks, and the first node becomes the rendezvous master. NCCL debug logging is turned on so the transport selection shows up in the logs.
 - **[`infra/`](infra/):** the mk8s node-group configs used (2 nodes and 4 nodes, 1× H100 each).
 
@@ -49,8 +50,6 @@ The max per-device batch size, 16, was found by binary search over OOMs (256 ✗
 
 Full analysis: [`docs/report_ddp_scaling.pdf`](docs/report_ddp_scaling.pdf). Raw logs: [`runs/gpt2-large-1v4gpu/`](runs/gpt2-large-1v4gpu/).
 
-> The GPT-2 Large runs used a course-provided `train.py` variant with `[Comm]` timing hooks. That variant isn't included here.
-
 ## Run it
 
 ```bash
@@ -65,11 +64,11 @@ sky launch -c ddp skypilot/train_job_opt-2.7b_2node.yaml
 sky logs ddp
 ```
 
-The step-by-step setup guide is in [`docs/assignment/hw_ddp_skypilot.md`](docs/assignment/hw_ddp_skypilot.md).
+Assignment briefs: [multi-node setup](docs/assignment/hw_ddp_multinode_setup.md) (experiment 1) and [scaling analysis](docs/assignment/hw_ddp_scaling.md) (experiment 2).
 
 ## Context
 
-This was an assignment for **Nebius Academy: AI Performance Engineering** (MLOps module: distributed training).
+This was an assignment for **Nebius Academy: AI Performance Engineering** (MLOps module: distributed training; Inference module: DDP scaling).
 
 ## Authors
 

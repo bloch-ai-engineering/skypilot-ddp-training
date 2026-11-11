@@ -11,7 +11,7 @@ resources:
 num_nodes: 4
 
 envs:
-  TRAIN_SCRIPT: "train.py"
+  TRAIN_SCRIPT: "train_gpt2_instrumented.py"
   BLOCK_SIZE: "512"
   PER_DEVICE_TRAIN_BATCH_SIZE: "16"
   PER_DEVICE_EVAL_BATCH_SIZE: "1"
