@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "id": "mk8snodegroup-e00jzq2amy0jk7na86",
+    "parent_id": "mk8scluster-e00tw71dn215rekwbq",
+    "name": "nath-bloch-node-group",
+    "resource_version": "1",
+    "created_at": "2026-05-27T09:26:53Z",
+    "updated_at": "2026-05-27T09:26:53Z"
+  },
+  "spec": {
+    "version": "1.33",
+    "fixed_node_count": "2",
+    "template": {
+      "resources": {
+        "platform": "gpu-h100-sxm",
+        "preset": "1gpu-16vcpu-200gb"
+      },
+      "boot_disk": {
+        "size_gibibytes": "100",
+        "block_size_bytes": "4096",
+        "type": "NETWORK_SSD"
+      },
+      "gpu_settings": {
+        "drivers_preset": "cuda13.0"
+      },
+      "os": "ubuntu24.04",
+      "network_interfaces": [
+        {
+          "subnet_id": "vpcsubnet-e00twftr6t04zjqs9b"
+        }
+      ],
+      "service_account_id": "serviceaccount-e00g89xvk3y5w4tfyy",
+      "reservation_policy": {}
+    }
+  }
+}
